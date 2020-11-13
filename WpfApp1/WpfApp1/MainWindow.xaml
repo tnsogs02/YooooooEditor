@@ -1,0 +1,257 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1076" Width="1920" Background="#FB474747" ResizeMode="CanMinimize" WindowState="Maximized" WindowStyle="None" BorderBrush="#FF474747" Visibility="Visible" >
+    <Window.Resources>
+        <ControlTemplate x:Key="MenuItemControlTemplate1" TargetType="{x:Type MenuItem}">
+            <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+                    <Path x:Name="GlyphPanel" Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z" Fill="{TemplateBinding Foreground}" FlowDirection="LeftToRight" Margin="3" Visibility="Collapsed" VerticalAlignment="Center"/>
+                    <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="1" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom">
+                        <Border x:Name="SubMenuBorder" BorderBrush="#FF4D4D4D" BorderThickness="1" Background="#FF4D4D4D" Padding="2">
+                            <ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <Grid RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=SubMenuBorder}" Height="{Binding ActualHeight, ElementName=SubMenuBorder}" Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+                                    </Canvas>
+                                    <Rectangle Fill="Transparent" HorizontalAlignment="Left" Margin="29,2,0,2" Width="1"/>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" Grid.IsSharedSizeScope="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                    <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+                </Trigger>
+                <Trigger Property="Icon" Value="{x:Null}">
+                    <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+                    <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                </Trigger>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" TargetName="templateRoot" Value="#3D26A0DA"/>
+                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
+                    <Setter Property="Fill" TargetName="GlyphPanel" Value="#FF707070"/>
+                </Trigger>
+                <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
+                    <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <DockPanel x:Name="RootWindow">
+        <!--seperate customize title bar and main screen-->
+        <Grid DockPanel.Dock="Top" Background="#FF303030" Height="40">
+            <Label x:Name="label8" Content="Raw Image Editor" HorizontalAlignment="Center" Foreground="#FF9D9D9D" />
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="MinButton" Content="  ___  "
+                    Click="MinimizeButton_Click" Background="#FF303030" BorderBrush="#00000000" Foreground="#FF9D9D9D" />
+                    <Button x:Name="CloseButton" Content="  X  "
+                    Click="CloseButton_Click"                 
+                    Background="#FF303030" BorderBrush="#00707070" Foreground="#FF9D9D9D" />
+                </StackPanel>
+                <!--customize menu bar below-->
+                <Menu  Height="20" Background="#FF4B4B4B" VerticalAlignment="Top" Margin="0,2,0,0" >
+
+                    <MenuItem x:Name="File" Header="_File" Foreground="#FF9D9D9D" Template="{DynamicResource MenuItemControlTemplate1}">
+                        <MenuItem x:Name="Open_Folder" Header="_Open Folder" Click="Open_Folder_Click" Background="#FF4B4B4B" BorderBrush="#FF4B4B4B" RenderTransformOrigin="0.5,0.5" />
+                        <MenuItem x:Name="Save_to_RAW" Header="_Save to RAW" Click="Save_to_RAW_Click" Background="#FF4B4B4B" />
+                        <MenuItem x:Name="Output_Bitmap" Header="_Output Bitmap" Click="Output_Bitmap_Click" Background="#FF4B4B4B" />
+                        <Separator BorderBrush="#FF7D7D7D" Background="#FF7D7D7D" Foreground="#FF7D7D7D" />
+                        <MenuItem x:Name="Exit" Header="_Exit" Click="Exit_Click" Background="#FF4B4B4B" />
+                    </MenuItem>
+                    <MenuItem x:Name="Edit" Header="_Edit" Foreground="#FF9D9D9D" Template="{DynamicResource MenuItemControlTemplate1}">
+                        <MenuItem x:Name="Undo" Header="_Undo" Click="Undo_Click"/>
+                        <MenuItem x:Name="Redo" Header="_Redo" Click="Redo_Click"/>
+                        <Separator Background="#FF7D7D7D" BorderBrush="#FF7D7D7D" />
+                        <MenuItem x:Name="Reset" Header="_Reset" Click="Reset_Click"/>
+                    </MenuItem>
+                    <MenuItem x:Name="Presets" Header="_Presets" Foreground="#FF9D9D9D" Template="{DynamicResource MenuItemControlTemplate1}">
+                        <MenuItem x:Name="Apply_preset_to_this_file" Header="_Apply preset to this file" Click="Apply_preset_to_this_file_Click"/>
+                        <MenuItem x:Name="Apply_preset_to_all_files" Header="_Apply preset to all files" Click="Apply_preset_to_all_files_Click"/>
+                        <MenuItem x:Name="Save_preset" Header="_Save preset" Click="Save_preset_Click"/>
+                    </MenuItem>
+                    <MenuItem x:Name="Languages" Header="_Languages" Foreground="#FF9D9D9D" Template="{DynamicResource MenuItemControlTemplate1}">
+                        <MenuItem x:Name="English" Header="_English" Checked="English_Checked" IsCheckable="True"/>
+                        <MenuItem x:Name="Traditional_Chinese" Header="_繁體中文" Checked="Traditional_Chinese_Checked" IsCheckable="True"/>
+                        <Separator Background="#FF7D7D7D" BorderBrush="#FF7D7D7D" />
+                        <MenuItem x:Name="Upload_customized_language_pack" Header="_Upload customized language pack..." Click="Upload_customized_language_pack_Click"/>
+                    </MenuItem>
+                    <MenuItem x:Name="About" Header="_About" Foreground="#FF9D9D9D" Template="{DynamicResource MenuItemControlTemplate1}">
+                        <MenuItem x:Name="Version_Info" Header="Version Info" Click="Version_Info_Click"/>
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+        </Grid>
+        <!--file bar-->
+        <StackPanel DockPanel.Dock="Bottom">
+            <Label DockPanel.Dock="Top" Content="Files"/>
+            <StackPanel x:Name="FileBar" DockPanel.Dock="Bottom" Orientation="Horizontal" Height="100" Background="#FF414141" VerticalAlignment="Bottom"/>
+        </StackPanel>
+        <!--mainscreen part-->
+        <Grid>
+
+
+            <!--main screen below-->
+            <Image x:Name="image1" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="0" MaxWidth="1025.6" MaxHeight="576"/>
+
+            <StackPanel x:Name="ToolBar" HorizontalAlignment="Right" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" Background="#FF525252" Margin="0,0,0,0.4" Width="480" >
+                <Image x:Name="image" HorizontalAlignment="Left" Height="180" VerticalAlignment="Top" Width="254"/>
+                <StackPanel Height="300">
+                    <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
+                        <Label x:Name="label3" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
+                        <Slider x:Name="slider0" VerticalAlignment="Center" Margin="40,21,240,21" Height="18"/>
+                        <TextBox x:Name="textBox" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                    </Grid>
+                    <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="label4" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
+                        <Slider x:Name="slider1" VerticalAlignment="Center" Margin="40,21,240,21"/>
+                        <TextBox x:Name="textBox1" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" HorizontalAlignment="Right" Background="#FF666666" BorderBrush="#FF888888"/>
+                    </Grid>
+                    <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="label5" Content="Label" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,17"/>
+                        <Slider x:Name="slider2" Width="200" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,21,240,21" Height="18"/>
+                        <TextBox x:Name="textBox2" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                    </Grid>
+                    <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="label6" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
+                        <Slider x:Name="slider3" VerticalAlignment="Center" Margin="40,21,240,21" Height="18"/>
+                        <TextBox x:Name="textBox3" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                    </Grid>
+                    <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="label7" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
+                        <Slider x:Name="slider4" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="40,22,240,22" Height="16"/>
+                        <TextBox x:Name="textBox4" HorizontalAlignment="Right" Height="22" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                    </Grid>
+                </StackPanel>
+                <Expander x:Name="EXIF" Header="EXIF" BorderBrush="#00000000" Expanded="Expander_Expanded" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" BorderThickness="0" RenderTransformOrigin="0.5,0.5" Background="#FF666666" >
+
+                    <StackPanel Height="100" Margin="0">
+                        <StackPanel.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </StackPanel.RenderTransform>
+                    </StackPanel>
+                </Expander>
+                <Expander  x:Name="expander" Header="Expander" BorderBrush="#00000000" Expanded="Expander_Expanded" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" BorderThickness="0" RenderTransformOrigin="0.5,0.5" Background="#FF666666" >
+                    <Expander.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Expander.RenderTransform>
+                    <StackPanel Height="148" Margin="0" Background="#FF333333" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="480">
+                        <StackPanel.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </StackPanel.RenderTransform>
+                        <StackPanel HorizontalAlignment="Center" Height="31" VerticalAlignment="Top" Orientation="Horizontal" RenderTransformOrigin="0.5,0.5" Width="480">
+                            <StackPanel.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </StackPanel.RenderTransform>
+                            <Label x:Name="label" Content="Label" VerticalAlignment="Top"/>
+                            <Slider x:Name="slider5" Margin="0,0,66.4,10" Width="100" Height="17.6" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center" Height="31" VerticalAlignment="Top" Orientation="Horizontal" RenderTransformOrigin="0.5,0.5" Width="480">
+                            <StackPanel.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </StackPanel.RenderTransform>
+                            <Label x:Name="label1" Content="Label" VerticalAlignment="Top"/>
+                            <Slider x:Name="slider6" Margin="0,0,66.4,10" Width="100" Height="17.6" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="31" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,0,-0.2,0" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Width="480">
+                            <StackPanel.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </StackPanel.RenderTransform>
+                            <Label x:Name="label2" Content="Label" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <Slider x:Name="slider7" Margin="0,2,66.4,12.2" Width="100" Height="17" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+
+
+            <!--main screen below-->
+
+        </Grid>
+
+    </DockPanel>
+</Window>
