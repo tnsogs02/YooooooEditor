@@ -110,5 +110,28 @@ namespace WpfApp1
 
         }
 
+        private void slider1_DragEnter(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void slider1_DragLeave(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void slider0_DragEnter(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void slider0_DragLeave(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void slider0_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+        }
     }
 }

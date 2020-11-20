@@ -121,8 +121,8 @@
                 <StackPanel Height="300">
                     <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
                         <Label x:Name="label3" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
-                        <Slider x:Name="slider0" VerticalAlignment="Center" Margin="40,21,240,21" Height="18"/>
-                        <TextBox x:Name="textBox" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                        <Slider x:Name="slider0" VerticalAlignment="Center" Margin="40,21,240,21" Height="18" DragEnter="slider0_DragEnter" DragLeave="slider0_DragLeave" MouseWheel="slider0_MouseWheel"/>
+                        <TextBox x:Name="textBox" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888" IsEnabled="False"/>
                     </Grid>
                     <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
                         <Grid.RenderTransform>
@@ -134,8 +134,8 @@
                             </TransformGroup>
                         </Grid.RenderTransform>
                         <Label x:Name="label4" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
-                        <Slider x:Name="slider1" VerticalAlignment="Center" Margin="40,21,240,21"/>
-                        <TextBox x:Name="textBox1" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" HorizontalAlignment="Right" Background="#FF666666" BorderBrush="#FF888888"/>
+                        <Slider x:Name="slider1" VerticalAlignment="Center" Margin="40,21,240,21" DragEnter="slider1_DragEnter" DragLeave="slider1_DragLeave"/>
+                        <TextBox x:Name="textBox1" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" HorizontalAlignment="Right" Background="#FF666666" BorderBrush="#FF888888" IsEnabled="False"/>
                     </Grid>
                     <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
                         <Grid.RenderTransform>
@@ -148,7 +148,7 @@
                         </Grid.RenderTransform>
                         <Label x:Name="label5" Content="Label" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,17"/>
                         <Slider x:Name="slider2" Width="200" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,21,240,21" Height="18"/>
-                        <TextBox x:Name="textBox2" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                        <TextBox x:Name="textBox2" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888" IsEnabled="False"/>
                     </Grid>
                     <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
                         <Grid.RenderTransform>
@@ -161,7 +161,7 @@
                         </Grid.RenderTransform>
                         <Label x:Name="label6" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
                         <Slider x:Name="slider3" VerticalAlignment="Center" Margin="40,21,240,21" Height="18"/>
-                        <TextBox x:Name="textBox3" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                        <TextBox x:Name="textBox3" HorizontalAlignment="Right" Height="23" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888" IsEnabled="False"/>
                     </Grid>
                     <Grid Background="#FF666666" RenderTransformOrigin="0.5,0.5" Margin="0" VerticalAlignment="Top" Height="60">
                         <Grid.RenderTransform>
@@ -174,7 +174,7 @@
                         </Grid.RenderTransform>
                         <Label x:Name="label7" Content="Label" VerticalAlignment="Center" Margin="0,17,440,17"/>
                         <Slider x:Name="slider4" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="40,22,240,22" Height="16"/>
-                        <TextBox x:Name="textBox4" HorizontalAlignment="Right" Height="22" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888"/>
+                        <TextBox x:Name="textBox4" HorizontalAlignment="Right" Height="22" Margin="0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="120" Background="#FF666666" BorderBrush="#FF888888" IsEnabled="False"/>
                     </Grid>
                 </StackPanel>
                 <Expander x:Name="EXIF" Header="EXIF" BorderBrush="#00000000" Expanded="Expander_Expanded" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" BorderThickness="0" RenderTransformOrigin="0.5,0.5" Background="#FF666666" >
