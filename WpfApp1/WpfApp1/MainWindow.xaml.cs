@@ -23,6 +23,14 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
+
+            /*FileBar.Width = RootWindow.Width;
+            FileBar.Height = RootWindow.Height / 8;
+            MainBlock.Width = RootWindow.Width;
+            MainBlock.Height = RootWindow.Height - MenuBar.Height - FileBar.Height;
+            ToolBar.Width = RootWindow.Width;
+            ToolBar.Height = MainBlock.Height;*/
         }
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
@@ -109,29 +117,94 @@ namespace WpfApp1
         {
 
         }
-
-        private void slider1_DragEnter(object sender, DragEventArgs e)
+        private void slider0_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
+            textBox0.Text = slider0.Value.ToString();
         }
-
-        private void slider1_DragLeave(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void slider0_DragEnter(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void slider0_DragLeave(object sender, DragEventArgs e)
-        {
-
-        }
-
         private void slider0_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            if (e.Delta > 0)
+                slider0.Value += 1;
+            else if (e.Delta < 0)
+                slider0.Value -= 1;
+        }
+        private void slider1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            textBox1.Text = slider1.Value.ToString();
+        }
+        private void slider1_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                slider1.Value += 1;
+            else if (e.Delta < 0)
+                slider1.Value -= 1;
+        }
+
+        private void slider2_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            textBox2.Text = slider2.Value.ToString();
+        }
+        private void slider2_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                slider2.Value += 1;
+            else if (e.Delta < 0)
+                slider2.Value -= 1;
+        }
+        private void slider3_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            textBox3.Text = slider3.Value.ToString();
+        }
+        private void slider3_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                slider3.Value += 1;
+            else if (e.Delta < 0)
+                slider3.Value -= 1;
+        }
+        private void slider4_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            textBox4.Text = slider4.Value.ToString();
+        }
+        private void slider4_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                slider4.Value += 1;
+            else if (e.Delta < 0)
+                slider4.Value -= 1;
+        }
+        private void slider5_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            textBox5.Text = slider5.Value.ToString();
+        }
+        private void slider5_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                slider5.Value += 1;
+            else if (e.Delta < 0)
+                slider5.Value -= 1;
+        }
+        private void slider6_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            textBox6.Text = slider6.Value.ToString();
+        }
+        private void slider6_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                slider6.Value += 1;
+            else if (e.Delta < 0)
+                slider6.Value -= 1;
+        }
+        private void slider7_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            textBox7.Text = slider7.Value.ToString();
+        }
+        private void slider7_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                slider7.Value += 1;
+            else if (e.Delta < 0)
+                slider7.Value -= 1;
         }
     }
 }
