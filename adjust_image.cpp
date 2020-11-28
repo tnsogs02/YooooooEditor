@@ -1,5 +1,5 @@
 ﻿#include"adjust_image.h"
-void adjust(cv::Mat& image, int temperature) {
+Mat adjust(cv::Mat image, int temperature) {
 	/*色溫調整，temperature在0~10000*/
 	double R = 0,B = 0;
 	std::vector<cv::Mat>imageRGB;
@@ -16,8 +16,9 @@ void adjust(cv::Mat& image, int temperature) {
 		imageRGB[0] /= R_B * ((double)(temperature/a));
 	}
 	merge(imageRGB, image);
+	return image;
 }
-void average(cv::Mat& image,int adjust) {
+Mat average(cv::Mat image,int adjust) {
 	float a = 1.5, b = 10;
 	if (adjust < 0) {
 		a = 0.5;
@@ -30,4 +31,5 @@ void average(cv::Mat& image,int adjust) {
 		}
 	}
 	/*曝光調整*/
+	return image;
 }
