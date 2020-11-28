@@ -3,5 +3,5 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include<opencv2/opencv.hpp>>
-void adjust(cv::Mat& image, int temperature);/*temperature╠╠╗Н╘р╜n╫у╕Б╥е╜х║A╜Y╪ф╕r╤V╓j║A╚h╧о╓Ы╤V╟╬бе*/
-void average(cv::Mat& image, int adjust);/*adjust>0╫у╚G╧о╓Ы║A╓p╘С╧s╫у╥t╧о╓Ы*/
+Mat adjust(cv::Mat image, int temperature);/*temperatureФ▌╖Е┬╤Ф┴─Х╕│Х╙©Х┴╡Ф╨╚Е─╪О╪▄Х▀╔Ф∙╦Е╜≈Х╤┼Е╓╖О╪▄Е┴┤Е°√Г┴┤Х╤┼Е│▐Х≈█*/
+Mat average(cv::Mat image, int adjust);/*adjust>0Х╙©Д╨╝Е°√Г┴┤О╪▄Е╟▐Ф√╪И⌡╤Х╙©Ф ≈Е°√Г┴┤*/
