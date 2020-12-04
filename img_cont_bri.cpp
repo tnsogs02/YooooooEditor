@@ -1,6 +1,6 @@
 #include "imgconv.h"
 
-void adjust_contrast(cv::Mat image, int contrast)
+cv::Mat adjust_contrast(cv::Mat image, int contrast)
 {
 	cv::Mat imageRGB[3];
 	cv::split(image, imageRGB);
@@ -12,9 +12,16 @@ void adjust_contrast(cv::Mat image, int contrast)
 	imageRGB[2] = contrast_factor * (imageRGB[2] - aver) + aver;
 
 	merge(imageRGB, 3, image);
+
+	return image;
 }
 
-void adjust_brightness(cv::Mat image, int brightness, double arguments)
+cv::Mat adjust_brightness(cv::Mat image, int brightness)
+{
+	return adjust_brightness(image, brightness,1.2);
+}
+
+cv::Mat adjust_brightness(cv::Mat image, int brightness, double arguments)
 {
 	cv::Mat imageRGB[3];
 	cv::split(image, imageRGB);
@@ -41,4 +48,5 @@ void adjust_brightness(cv::Mat image, int brightness, double arguments)
 			}
 		}
 	}
+	return image;
 }
