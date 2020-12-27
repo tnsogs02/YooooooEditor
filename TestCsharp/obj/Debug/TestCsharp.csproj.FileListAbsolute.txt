@@ -1,0 +1,13 @@
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\bin\Debug\TestCsharp.exe.config
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\bin\Debug\TestCsharp.exe
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\bin\Debug\TestCsharp.pdb
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\bin\Debug\Dll1.dll
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\bin\Debug\Dll1.pdb
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.csprojAssemblyReference.cache
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.Form1.resources
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.Properties.Resources.resources
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.csproj.GenerateResource.cache
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.csproj.CoreCompileInputs.cache
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.csproj.CopyComplete
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.exe
+C:\Users\henry\source\repos\tnsogs02\YooooooEditor\TestCsharp\obj\Debug\TestCsharp.pdb
