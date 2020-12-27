@@ -2,20 +2,10 @@
 #include"Header.h"
 
 Mat Colorfulness(Mat img, int i) {
-	float j = i / 100;
-	float max = 0;
 	Mat fimg;
 	img.convertTo(fimg, 21, 1.0 / 255.0, 0);
 	Mat imgHSV;
 	cvtColor(img, imgHSV, COLOR_RGB2HSV);
-	/*    for (int r = 0; r < imgHSV.rows; r++) {
-			Vec3f* ptr = imgHSV.ptr<Vec3f>(r);
-			for (int c = 0; c < imgHSV.cols; c++) {
-				if (ptr[c][1] + i < 255) {
-					ptr[c][1] += i;
-				}
-			}
-		}*/
 
 	for (int r = 0; r < imgHSV.rows; r++) {
 		uchar* p = imgHSV.ptr(r);
@@ -30,26 +20,33 @@ Mat Colorfulness(Mat img, int i) {
 		}
 	}
 
-
-
 	cvtColor(imgHSV, fimg, COLOR_HSV2RGB);
 
 	return fimg;
 }
 
 Mat Dark_Adjust(Mat img, int i) {
-	float j = i / 100;
 	float threshold = 40;
 	Mat fimg;
 	img.convertTo(fimg, 21, 1.0 / 255.0, 0);
 	Mat HLSimg;
 	cvtColor(fimg, HLSimg, COLOR_RGB2HLS);
+
 	for (int r = 0; r < HLSimg.rows; r++) {
-		Vec3f* ptr = HLSimg.ptr<Vec3f>(r);
+		uchar* p = HLSimg.ptr(r);
 		for (int c = 0; c < HLSimg.cols; c++) {
-			if (ptr[c][1] < threshold)ptr[c][1] += j;
+			int q = *(p + c * 3 + 1);
+			if (q < threshold) {
+				if (q + i >= 255)
+					*(p + c * 3 + 1) = 255;
+				else if (q + i <= 0)
+					*(p + c * 3 + 1) = 0;
+				else
+					*(p + c * 3 + 1) += i;
+			}
 		}
 	}
+
 	cvtColor(HLSimg, fimg, COLOR_HLS2RGB);
 
 	return fimg;
@@ -151,3 +148,57 @@ Mat adjust_brightness(Mat image, int brightness, double arguments)
 
 
 //=================================================================================================
+//Color Seperate
+Mat Red(Mat img, int i) {
+	Mat fimg;
+	img.copyTo(fimg);
+	for (int r = 0; r < fimg.rows; r++) {
+		uchar* p = fimg.ptr(r);
+		for (int c = 0; c < fimg.cols; c++) {
+			int q = *(p + c * 3);
+			if (q + i >= 255)
+				*(p + c * 3) = 255;
+			else if (q + i <= 0)
+				*(p + c * 3) = 0;
+			else
+				*(p + c * 3) += i;
+		}
+	}
+	return fimg;
+}
+
+Mat Green(Mat img, int i) {
+	Mat fimg;
+	img.copyTo(fimg);
+	for (int r = 0; r < fimg.rows; r++) {
+		uchar* p = fimg.ptr(r);
+		for (int c = 0; c < fimg.cols; c++) {
+			int q = *(p + c * 3 + 1);
+			if (q + i >= 255)
+				*(p + c * 3 + 1) = 255;
+			else if (q + i <= 0)
+				*(p + c * 3 + 1) = 0;
+			else
+				*(p + c * 3 + 1) += i;
+		}
+	}
+	return fimg;
+}
+
+Mat Blue(Mat img, int i) {
+	Mat fimg;
+	img.copyTo(fimg);
+	for (int r = 0; r < fimg.rows; r++) {
+		uchar* p = fimg.ptr(r);
+		for (int c = 0; c < fimg.cols; c++) {
+			int q = *(p + c * 3 + 2);
+			if (q + i >= 255)
+				*(p + c * 3 + 2) = 255;
+			else if (q + i <= 0)
+				*(p + c * 3 + 2) = 0;
+			else
+				*(p + c * 3 + 2) += i;
+		}
+	}
+	return fimg;
+}

@@ -21,6 +21,10 @@ Mat adjust_brightness(Mat image, int brightness);
 Mat adjust_brightness(Mat image, int brightness, double arguments);
 //brightness: prefer -50 ~ +50 ; arguments: default 1.2
 
+//Color Seperate
+Mat Red(Mat img, int i);
+Mat Green(Mat img, int i);
+Mat Blue(Mat img, int i);
 //=================================================================================================
 extern "C"
 {
