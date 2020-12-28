@@ -8,10 +8,19 @@
 
 #define YORECORDNAME "Iptc.0x0019.0x0000"
 
-extern "C" class __declspec(dllimport) rawIO {
-public:
-	int _stdcall tiffExport(char* inPath, char* outPath);
-	int _stdcall iptcWrite(char* filePath, char* iptcValue);
-	int _stdcall iptcRead(char* filePath, char* iptcValue);
-	int _stdcall exifRead(char* inPath, char* exifValue);
-};
+extern "C" __declspec(dllexport) int CStiffExport(char* inPath, char* outPath) {
+	rawIO raw;
+	return raw.tiffExport(inPath, outPath);
+}
+extern "C" __declspec(dllexport) int CSiptcWrite(char* filePath, char* iptcValue) {
+	rawIO raw;
+	return raw.iptcWrite(filePath, iptcValue);
+}
+extern "C" __declspec(dllexport) int CSiptcRead(char* filePath, char* iptcValue) {
+	rawIO raw;
+	return raw.iptcRead(filePath, iptcValue);
+}
+extern "C" __declspec(dllexport) int CSexifRead(char* inPath, char* exifValue) {
+	rawIO raw;
+	return raw.exifRead(inPath, exifValue);
+}
