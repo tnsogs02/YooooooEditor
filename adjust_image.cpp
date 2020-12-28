@@ -18,15 +18,23 @@ Mat adjust(cv::Mat image, int temperature) {
 	merge(imageRGB, image);
 	return image;
 }
-Mat average(cv::Mat image,int adjust) {
+cv::Mat average(cv::Mat image, int adjust) {
 	float a = 1.5, b = 10;
-	if (adjust < 0) {
-		a = 0.5;
-	}
+	cv::Mat imageRGB[3];
+	cv::split(image, imageRGB);
+	double aver = (mean(imageRGB[0])[0] + mean(imageRGB[1])[0] + mean(imageRGB[2])[0]) / 3;
 	for (int i = 0; i < image.rows; i++) {
 		for (int j = 0; j < image.cols; j++) {
-			for (int k = 0; k < 3; k++) {
-				image.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>(a * (image.at<cv::Vec3b>(i, j)[k]) + b);
+			double all = image.at<cv::Vec3b>(i, j)[0] + image.at<cv::Vec3b>(i, j)[1] + image.at<cv::Vec3b>(i, j)[2];
+			if (all<aver &&adjust>0) {
+				for (int k = 0; k < 3; k++) {
+					image.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>(a * (image.at<cv::Vec3b>(i, j)[k]) + b);
+				}
+			}
+			if (all > aver && adjust<0) {
+				for (int k = 0; k < 3; k++) {
+					image.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>( (image.at<cv::Vec3b>(i, j)[k])/a - b);
+				}
 			}
 		}
 	}
