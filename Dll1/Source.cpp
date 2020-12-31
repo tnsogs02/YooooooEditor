@@ -27,8 +27,8 @@ Mat Colorfulness(Mat img, int i) {
 
 Mat Dark_Adjust(Mat img, int i) {
 	float threshold = 40;
-	Mat fimg;
-	img.convertTo(fimg, 21, 1.0 / 255.0, 0);
+	Mat fimg=img;
+	//img.convertTo(fimg, 21, 1.0 / 255.0, 0);
 	Mat HLSimg;
 	cvtColor(fimg, HLSimg, COLOR_RGB2HLS);
 
@@ -149,55 +149,35 @@ Mat adjust_brightness(Mat image, int brightness, double arguments)
 
 //=================================================================================================
 //Color Seperate
-Mat Red(Mat img, int i) {
+Mat BGRch(Mat img, int B, int G, int R) {
 	Mat fimg;
 	img.copyTo(fimg);
 	for (int r = 0; r < fimg.rows; r++) {
 		uchar* p = fimg.ptr(r);
 		for (int c = 0; c < fimg.cols; c++) {
 			int q = *(p + c * 3);
-			if (q + i >= 255)
+			if (q + B >= 255)
 				*(p + c * 3) = 255;
-			else if (q + i <= 0)
+			else if (q + B <= 0)
 				*(p + c * 3) = 0;
 			else
-				*(p + c * 3) += i;
-		}
-	}
-	return fimg;
-}
+				*(p + c * 3) += B;
 
-Mat Green(Mat img, int i) {
-	Mat fimg;
-	img.copyTo(fimg);
-	for (int r = 0; r < fimg.rows; r++) {
-		uchar* p = fimg.ptr(r);
-		for (int c = 0; c < fimg.cols; c++) {
-			int q = *(p + c * 3 + 1);
-			if (q + i >= 255)
+			q = *(p + c * 3 + 1);
+			if (q + G >= 255)
 				*(p + c * 3 + 1) = 255;
-			else if (q + i <= 0)
+			else if (q + G <= 0)
 				*(p + c * 3 + 1) = 0;
 			else
-				*(p + c * 3 + 1) += i;
-		}
-	}
-	return fimg;
-}
+				*(p + c * 3 + 1) += G;
 
-Mat Blue(Mat img, int i) {
-	Mat fimg;
-	img.copyTo(fimg);
-	for (int r = 0; r < fimg.rows; r++) {
-		uchar* p = fimg.ptr(r);
-		for (int c = 0; c < fimg.cols; c++) {
-			int q = *(p + c * 3 + 2);
-			if (q + i >= 255)
+			q = *(p + c * 3 + 2);
+			if (q + R >= 255)
 				*(p + c * 3 + 2) = 255;
-			else if (q + i <= 0)
+			else if (q + R <= 0)
 				*(p + c * 3 + 2) = 0;
 			else
-				*(p + c * 3 + 2) += i;
+				*(p + c * 3 + 2) += R;
 		}
 	}
 	return fimg;

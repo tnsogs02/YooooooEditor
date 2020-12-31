@@ -22,13 +22,11 @@ Mat adjust_brightness(Mat image, int brightness, double arguments);
 //brightness: prefer -50 ~ +50 ; arguments: default 1.2
 
 //Color Seperate
-Mat Red(Mat img, int i);
-Mat Green(Mat img, int i);
-Mat Blue(Mat img, int i);
+Mat BGRch(Mat img, int i, int j, int k);
 //=================================================================================================
 extern "C"
 {
 
-	__declspec(dllexport) int ret(unsigned char* imageBuffer, int width, int height, int ch);
+	__declspec(dllexport) int ret(unsigned char* imageBuffer, int width, int height, int a, int b, int c, int d, int e, int f, int g, int h, int i);
 
 }
