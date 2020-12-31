@@ -72,7 +72,7 @@ Mat Dark_Adjust(Mat img, int i) {
 
 
 //=================================================================================================
-int adjust(Mat image, int temperature) {
+int temperature(Mat image, int temperature) {
 	/*色溫計算，基本上每次圖片進來都call一次，如果想省時間請直接把搖桿初始值設為5000*/
 	double R = 0, B = 0;
 	vector<Mat>imageRGB;
