@@ -146,10 +146,6 @@ Mat adjust_contrast(Mat image, int contrast)
 	return newimage;
 }
 
-Mat adjust_brightness(Mat image, int brightness)
-{
-	return adjust_brightness(image, brightness, 1.2);
-}
 
 Mat adjust_brightness(Mat image, int brightness, double arguments)
 {

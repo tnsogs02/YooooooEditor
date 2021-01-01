@@ -17,7 +17,6 @@ Mat adjust(Mat image, int temperature);/*temperature控制所要調色溫值，若數字越大
 Mat average(Mat image, int adjust);/*adjust>0調亮圖片，小於零調暗圖片*/
 
 Mat adjust_contrast(Mat image, int contrast);//contrast: prefer 0 ~ 100
-Mat adjust_brightness(Mat image, int brightness);
 Mat adjust_brightness(Mat image, int brightness, double arguments);
 //brightness: prefer -50 ~ +50 ; arguments: default 1.2
 
