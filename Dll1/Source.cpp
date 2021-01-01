@@ -54,15 +54,27 @@ Mat Dark_Adjust(Mat img, int i) {
 
 
 //=================================================================================================
-Mat adjust(Mat image, int temperature) {
-	/*��Žվ�Atemperature�b0~10000*/
+int temperature(Mat image, int temperature) {
+	/*色溫計算，基本上每次圖片進來都call一次，如果想省時間請直接把搖桿初始值設為5000*/
 	double R = 0, B = 0;
 	vector<Mat>imageRGB;
 	split(image, imageRGB);
 	B = mean(imageRGB[0])[0] + 1;
 	R = mean(imageRGB[2])[0] + 1;
 	double R_B = R / B;
-	/*R/B/256��10000+5000�����*/
+	/*R/B/256乘10000+5000為色溫*/
+	double a = R_B / 256 * 10000 + 5000;
+	return (int)a;
+
+Mat adjust(Mat image, int temperature) {
+	/*色溫調整，temperature在0~10000*/
+	double R = 0, B = 0;
+	vector<Mat>imageRGB;
+	split(image, imageRGB);
+	B = mean(imageRGB[0])[0] + 1;
+	R = mean(imageRGB[2])[0] + 1;
+	double R_B = R / B;
+	/*R/B/256乘10000+5000為色溫*/
 	double a = R_B / 256 * 10000 + 5000;
 	if (R > 128) {
 		imageRGB[2] /= R_B * ((double)(temperature / a));
@@ -73,19 +85,27 @@ Mat adjust(Mat image, int temperature) {
 	merge(imageRGB, image);
 	return image;
 }
-Mat average(Mat image, int adjust) {
-	float a = 1.5, b = 10;
-	if (adjust < 0) {
-		a = 0.5;
-	}
+Mat average(cv::Mat image, int adjust) {
+	float a = 1.2, b = 10;
+	cv::Mat imageRGB[3];
+	cv::split(image, imageRGB);
+	double aver = (mean(imageRGB[0])[0] + mean(imageRGB[1])[0] + mean(imageRGB[2])[0]) / 3;
 	for (int i = 0; i < image.rows; i++) {
 		for (int j = 0; j < image.cols; j++) {
-			for (int k = 0; k < 3; k++) {
-				image.at<cv::Vec3b>(i, j)[k] = saturate_cast<uchar>(a * (image.at<Vec3b>(i, j)[k]) + b);
+			double all = image.at<cv::Vec3b>(i, j)[0] + image.at<cv::Vec3b>(i, j)[1] + image.at<cv::Vec3b>(i, j)[2];
+			if (all<aver &&adjust>0) {
+				for (int k = 0; k < 3; k++) {
+					image.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>(a * (image.at<cv::Vec3b>(i, j)[k]) + b);
+				}
+			}
+			if (all > aver && adjust<0) {
+				for (int k = 0; k < 3; k++) {
+					image.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>( (image.at<cv::Vec3b>(i, j)[k])/a - b);
+				}
 			}
 		}
 	}
-	/*�n���վ�*/
+	/*曝光調整*/
 	return image;
 }
 
