@@ -54,22 +54,11 @@ Mat Dark_Adjust(Mat img, int i) {
 
 
 //=================================================================================================
-int temperature(Mat image, int temperature) {
-	/*色溫計算，基本上每次圖片進來都call一次，如果想省時間請直接把搖桿初始值設為5000*/
-	double R = 0, B = 0;
-	vector<Mat>imageRGB;
-	split(image, imageRGB);
-	B = mean(imageRGB[0])[0] + 1;
-	R = mean(imageRGB[2])[0] + 1;
-	double R_B = R / B;
-	/*R/B/256乘10000+5000為色溫*/
-	double a = R_B / 256 * 10000 + 5000;
-	return (int)a;
 
 Mat adjust(Mat image, int temperature) {
 	/*色溫調整，temperature在0~10000*/
 	double R = 0, B = 0;
-	vector<Mat>imageRGB;
+	Mat imageRGB[3];
 	split(image, imageRGB);
 	B = mean(imageRGB[0])[0] + 1;
 	R = mean(imageRGB[2])[0] + 1;
