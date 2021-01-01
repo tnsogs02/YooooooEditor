@@ -104,6 +104,9 @@ Mat adjust(Mat image, int temperature) {
 	return image;
 }
 cv::Mat average(cv::Mat image, int adjust) {
+	if(adjust==0){
+		return image;
+	}
 	float a = 1.2, b = 10;
 	cv::Mat imageRGB[3];
 	cv::split(image, imageRGB);
