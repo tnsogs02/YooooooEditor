@@ -13,11 +13,10 @@ using namespace cv;
 Mat Colorfulness(Mat img, int i);	//int i from -100 to 100
 Mat Dark_Adjust(Mat img, int i);	//int i from 0 to 100
 
-Mat adjust(Mat image, int temperature);/*temperature±±¨î©Ò­n½Õ¦â·Å­È¡A­Y¼Æ¦r¶V¤j¡A«h¹Ï¤ù¶V°¾ÂÅ*/
-Mat average(Mat image, int adjust);/*adjust>0½Õ«G¹Ï¤ù¡A¤p©ó¹s½Õ·t¹Ï¤ù*/
+Mat adjust(Mat image, int temperature);/*temperatureæ§åˆ¶æ‰€è¦èª¿è‰²æº«å€¼ï¼Œè‹¥æ•¸å­—è¶Šå¤§ï¼Œå‰‡åœ–ç‰‡è¶Šåè—*/
+Mat average(Mat image, int adjust);/*adjust>0èª¿äº®åœ–ç‰‡ï¼Œå°æ–¼é›¶èª¿æš—åœ–ç‰‡*/
 
 Mat adjust_contrast(Mat image, int contrast);//contrast: prefer 0 ~ 100
-Mat adjust_brightness(Mat image, int brightness);
 Mat adjust_brightness(Mat image, int brightness, double arguments);
 //brightness: prefer -50 ~ +50 ; arguments: default 1.2
 
