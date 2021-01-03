@@ -74,13 +74,13 @@ Mat adjust(Mat image, int temperature) {
 	merge(imageRGB, image);
 	return image;
 }
-Mat average(cv::Mat image, int adjust) {
+Mat average(Mat image, int adjust) {
 	if(adjust==0){
 		return image;
 	}
 	float a = 1.2, b = 10;
-	cv::Mat imageRGB[3];
-	cv::split(image, imageRGB);
+	Mat imageRGB[3];
+	split(image, imageRGB);
 	double aver = (mean(imageRGB[0])[0] + mean(imageRGB[1])[0] + mean(imageRGB[2])[0]) / 3;
 	for (int i = 0; i < image.rows; i++) {
 		for (int j = 0; j < image.cols; j++) {
