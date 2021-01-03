@@ -75,24 +75,25 @@ Mat adjust(Mat image, int temperature) {
 	return image;
 }
 Mat average(Mat image, int adjust) {
+	Mat newimage;
+	image.copyTo(newimage);
 	if(adjust==0){
-		return image;
+		return newimage;
 	}
-	float a = 1.2, b = 10;
 	Mat imageRGB[3];
-	split(image, imageRGB);
-	double aver =  (mean(imageRGB[0])[0] + mean(imageRGB[1])[0] + mean(imageRGB[2])[0]) / 3.0;
-	for (int i = 0; i < image.rows; i++) {
-		for (int j = 0; j < image.cols; j++) {
-			double all = image.at<cv::Vec3b>(i, j)[0] + image.at<cv::Vec3b>(i, j)[1] + image.at<cv::Vec3b>(i, j)[2];
+	split(newimage, imageRGB);
+	double aver = (mean(imageRGB[0])[0] + mean(imageRGB[1])[0] + mean(imageRGB[2])[0]) / 3.0;
+	for (int i = 0; i < newimage.rows; i++) {
+		for (int j = 0; j < newimage.cols; j++) {
+			double all = newimage.at<cv::Vec3b>(i, j)[0] + newimage.at<cv::Vec3b>(i, j)[1] + newimage.at<cv::Vec3b>(i, j)[2];
 			if (all<aver &&adjust>0) {
 				for (int k = 0; k < 3; k++) {
-					image.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>(a * (image.at<cv::Vec3b>(i, j)[k]) + b);
+					newimage.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>(1.2 * (newimage.at<cv::Vec3b>(i, j)[k]) + 10);
 				}
 			}
 			if (all > aver && adjust<0) {
 				for (int k = 0; k < 3; k++) {
-					image.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>( (image.at<cv::Vec3b>(i, j)[k])/a - b);
+					newimage.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>( (newimage.at<cv::Vec3b>(i, j)[k])/0.8);
 				}
 			}
 		}
