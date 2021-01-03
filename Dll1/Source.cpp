@@ -83,23 +83,29 @@ Mat average(Mat image, int adjust) {
 	Mat imageRGB[3];
 	split(newimage, imageRGB);
 	double aver = (mean(imageRGB[0])[0] + mean(imageRGB[1])[0] + mean(imageRGB[2])[0]) / 3.0;
-	for (int i = 0; i < newimage.rows; i++) {
-		for (int j = 0; j < newimage.cols; j++) {
-			double all = newimage.at<cv::Vec3b>(i, j)[0] + newimage.at<cv::Vec3b>(i, j)[1] + newimage.at<cv::Vec3b>(i, j)[2];
-			if (all<aver &&adjust>0) {
-				for (int k = 0; k < 3; k++) {
-					newimage.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>(1.2 * (newimage.at<cv::Vec3b>(i, j)[k]) + 10);
+	double x;
+	for (int i = 0; i < newimage.rows; i++)
+	{
+		for (int j = 0; j < newimage.cols; j++)
+		{
+			x = newimage.at<cv::Vec3b>(i, j)[0]+newimage.at<cv::Vec3b>(i, j)[1]+newimage.at<cv::Vec3b>(i, j)[2];;
+			if (x >= aver &&adjust>0)
+			{
+				for (int k = 0; k < 3; k++)
+				{
+					newimage.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>((newimage.at<cv::Vec3b>(i, j)[k]) + 50);
 				}
 			}
-			if (all > aver && adjust<0) {
-				for (int k = 0; k < 3; k++) {
-					newimage.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>( (newimage.at<cv::Vec3b>(i, j)[k])/0.8);
+			if (x < aver &&adjust<0)
+			{
+				for (int k = 0; k < 3; k++)
+				{
+					newimage.at<cv::Vec3b>(i, j)[k] = cv::saturate_cast<uchar>((newimage.at<cv::Vec3b>(i, j)[k]) - 50);
 				}
 			}
 		}
 	}
-	/*曝光調整*/
-	return image;
+	return newimage;
 }
 
 
